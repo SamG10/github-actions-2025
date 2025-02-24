@@ -1,0 +1,18 @@
+name: Workflow Liés
+
+on:
+  workflow_dispatch:
+
+jobs:
+  manual-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher un message pour le job manuel
+        run: echo "Job manuel exécuté !"
+
+  dependent-job:
+    needs: manual-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher un message après le job manuel
+        run: echo "Le job manuel est terminé, j'exécute le second job !"

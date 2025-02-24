@@ -1,0 +1,12 @@
+name: Issue Opened
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  issue-created:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher un message
+        run: echo "Issue créée"
