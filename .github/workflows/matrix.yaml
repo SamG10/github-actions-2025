@@ -1,0 +1,17 @@
+name: Fruits
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-messages:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        fruit: [pomme, banane, clementine, orange]
+        name: [Michel, Romain, Antoine]
+
+    steps:
+      - name: Afficher un message avec un fruit et un nom
+        run: echo "${{ matrix.name }} mange une ${{ matrix.fruit }}, et il adore ça !"
