@@ -1,0 +1,34 @@
+name: Pull Or Push
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  PUSH_MESSAGE: "C'est un push !"
+  PULL_REQUEST_MESSAGE: "C'est une pull request !"
+
+jobs:
+  push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Print push message
+        run: echo "$PUSH_MESSAGE"
+
+  pull-request:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Print pull request message
+        run: echo "$PULL_REQUEST_MESSAGE"
