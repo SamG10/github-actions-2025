@@ -1,0 +1,23 @@
+name: Create Branch on Issue Assignment
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create branch from develop
+        run: |
+          ISSUE_NUMBER=${{ github.event.issue.number }}
+          BRANCH_NAME="feat/issue-${ISSUE_NUMBER}"
+
+          git fetch origin develop
+
+          git checkout -b $BRANCH_NAME origin/develop
+          git push origin $BRANCH_NAME

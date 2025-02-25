@@ -1,0 +1,25 @@
+name: Conventionnal commits
+
+on:
+  push:
+    branches:
+      - "feat/*"
+      - "hotfix/*"
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install conventionnal commits
+        uses: webiny/action-conventional-commits@v1.3.0
+        with:
+          allowed-commit-types: "feat,fix,build,chore,docs,refactor,style,test,revert"
