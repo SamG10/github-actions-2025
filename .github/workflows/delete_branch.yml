@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - "develop"
-      - "main"
+      - "master"
 
 jobs:
   delete-feature-branch:
@@ -26,13 +26,13 @@ jobs:
           fi
 
   delete-hotfix-branch:
-    if: startsWith(github.ref, 'refs/heads/main')
+    if: startsWith(github.ref, 'refs/heads/master')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Delete hotfix branch after merge to main
+      - name: Delete hotfix branch after merge to master
         run: |
           BRANCH_NAME=$(echo "${GITHUB_REF}" | sed 's/refs\/heads\///')
 
