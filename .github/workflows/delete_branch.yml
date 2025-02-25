@@ -1,0 +1,44 @@
+name: Delete Branches After Merge
+
+on:
+  push:
+    branches:
+      - "develop"
+      - "main"
+
+jobs:
+  delete-feature-branch:
+    if: startsWith(github.ref, 'refs/heads/develop')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Delete feature branch after merge to develop
+        run: |
+          BRANCH_NAME=$(echo "${GITHUB_REF}" | sed 's/refs\/heads\///')
+
+          if [[ "$BRANCH_NAME" == feat/* ]]; then
+            echo "Deleting branch $BRANCH_NAME"
+            git push origin --delete $BRANCH_NAME
+          else
+            echo "Not a feature branch, skipping deletion."
+          fi
+
+  delete-hotfix-branch:
+    if: startsWith(github.ref, 'refs/heads/main')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Delete hotfix branch after merge to main
+        run: |
+          BRANCH_NAME=$(echo "${GITHUB_REF}" | sed 's/refs\/heads\///')
+
+          if [[ "$BRANCH_NAME" == hotfix/* ]]; then
+            echo "Deleting branch $BRANCH_NAME"
+            git push origin --delete $BRANCH_NAME
+          else
+            echo "Not a hotfix branch, skipping deletion."
+          fi
